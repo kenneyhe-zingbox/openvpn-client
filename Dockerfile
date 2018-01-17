@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER David Personette <dperson@gmail.com>
+MAINTAINER Kenney He <kenney.he@zingbox.com>
 
 # Install openvpn
 RUN apk --no-cache --no-progress upgrade && \
@@ -10,8 +10,9 @@ RUN apk --no-cache --no-progress upgrade && \
 
 COPY openvpn.sh /usr/bin/
 
-HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
-             CMD curl -L 'https://api.ipify.org'
+# disable port 22 health check
+#HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
+#             CMD curl -L 'https://api.ipify.org'
 
 VOLUME ["/vpn"]
 

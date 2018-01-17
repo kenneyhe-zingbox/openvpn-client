@@ -2,7 +2,11 @@ version: '3.4'
 
 services:
   vpn:
-    image: dperson/openvpn-client
+    secrets:
+      - vpn_user
+      - vpn_pass
+
+    image: kenneyhe/openvpn-client
     # cap_add, security_opt, and volume required for the image to function
     cap_add:
       - net_admin
@@ -27,7 +31,7 @@ services:
 
   # Replace "service1" with and image with an actual service you want to run
   service1:
-    image: docker_hub_user/container_name
+    image: kenneyhe/openvpn-client
     depends_on:
       - vpn
     environment:
@@ -37,7 +41,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - /srv/service1:/var/lib/service1:Z
+      - /Users/Shared:/var/lib/service1:Z
 
   web:
     image: dperson/nginx
@@ -66,3 +70,9 @@ services:
 
 networks:
   default:
+
+secrets:
+  vpn_user:
+    file: user.json
+  vpn_pass:
+    file: password.json
