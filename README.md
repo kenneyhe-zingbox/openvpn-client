@@ -39,6 +39,67 @@ container) when you launch the service in it's container.
 `docker-compose`, see the example
 [file](https://github.com/dperson/openvpn-client/raw/master/docker-compose.yml).
 
+## create secret in a file, rotating secret assuming your file and you can access it
+  see https://docs.docker.com/engine/reference/commandline/secret_create/#extended-description
+  see https://docs.docker.com/engine/swarm/secrets/#example-rotate-a-secret
+
+``` bash
+$ docker secret create user ./user.json 
+t5iftl7w5rx0du5iodyza9692
+
+$ docker secret create password ./password.json
+marfsd5k0pg3h8902z0dxej4g
+
+$ docker secret inspect user
+[
+    {
+        "ID": "t5iftl7w5rx0du5iodyza9692",
+        "Version": {
+            "Index": 11
+        },
+        "CreatedAt": "2018-01-17T19:52:21.227672Z",
+        "UpdatedAt": "2018-01-17T19:52:21.227672Z",
+        "Spec": {
+            "Name": "user",
+            "Labels": {}
+        }
+    }
+]
+```
+
+## Build the docker container and running it with secrets
+``` bash
+   sudo docker build -t kenneyhe/openvpn-client .
+   sudo docker-compose up
+   
+   $ sudo docker-compose up
+
+openvpnclient_vpn_1 is up-to-date
+Recreating openvpnclient_service1_1 ... 
+Recreating openvpnclient_service1_1 ... done
+Creating openvpnclient_web_1 ... 
+Creating openvpnclient_web_1 ... done
+Attaching to openvpnclient_vpn_1, openvpnclient_service1_1, openvpnclient_web_1
+...
+service1_1  | ERROR: VPN not configured!
+web_1       | Generating a 2048 bit RSA private key
+web_1       | .......+++
+...
+web_1       | ..............+++
+web_1       | unable to write 'random state'
+web_1       | writing new private key to '/etc/nginx/ssl/privkey.pem'
+web_1       | -----
+```
+
+## Quit
+``` bash
+$ sudo docker-compose down
+Removing openvpnclient_web_1      ... done
+Removing openvpnclient_service1_1 ... done
+Removing openvpnclient_vpn_1      ... done
+Removing network openvpnclient_default
+
+```
 ## Starting an OpenVPN client instance
 
     sudo cp /path/to/vpn.crt /some/path/vpn-ca.crt
