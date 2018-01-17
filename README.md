@@ -40,7 +40,10 @@ container) when you launch the service in it's container.
 [file](https://github.com/dperson/openvpn-client/raw/master/docker-compose.yml).
 
 ## create secret in a file, rotating secret assuming your file and you can access it
+
   see https://docs.docker.com/engine/reference/commandline/secret_create/#extended-description
+  
+  
   see https://docs.docker.com/engine/swarm/secrets/#example-rotate-a-secret
 
 ``` bash
